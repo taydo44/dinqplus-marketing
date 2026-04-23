@@ -24,7 +24,6 @@ export default function Hero() {
         className="absolute inset-0 w-full h-full"
         colors={["#000000", "#6B21A8", "#4F46E5", "#0A0A0F", "#7F77DD"]}
         speed={0.3}
-        backgroundColor="#000000"
       />
 
       <svg className="absolute inset-0 w-0 h-0">
