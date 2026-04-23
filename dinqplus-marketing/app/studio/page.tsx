@@ -1,6 +1,5 @@
 "use client"
 import { Navbar } from "@/components/navbar"
-"use client"
 import { useRouter } from "next/navigation"
 import { Globe } from "@/components/globe"
 import { Gallery } from "@/components/gallery"

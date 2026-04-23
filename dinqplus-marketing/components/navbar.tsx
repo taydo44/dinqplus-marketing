@@ -60,7 +60,7 @@ export function Navbar() {
         {links.map((link) => {
           const isActive = pathname === link.href
           return (
-            
+            <a
               key={link.href}
               href={link.href}
               style={{

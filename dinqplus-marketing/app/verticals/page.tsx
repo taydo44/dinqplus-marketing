@@ -1,6 +1,5 @@
 "use client"
 import { Navbar } from "@/components/navbar"
-"use client"
 import { GlowCard } from "@/components/glow-card"
 import OrbitalTimeline from "@/components/orbital-timeline"
 import { useRouter } from "next/navigation"

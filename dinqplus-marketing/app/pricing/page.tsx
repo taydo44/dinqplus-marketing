@@ -1,6 +1,5 @@
 "use client"
 import { Navbar } from "@/components/navbar"
-"use client"
 import AuroraPricing from "@/components/aurora-pricing"
 import { CountdownBanner } from "@/components/countdown-banner"
 import { useRouter } from "next/navigation"
