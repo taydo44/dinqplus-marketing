@@ -122,11 +122,11 @@ export default function StudioPage() {
               Book a call
             </button>
             
-              href="mailto:dinqdigital@gmail.com"
+              href="mailto:dinqdigital[at]gmail.com"
               className="px-8 py-4 rounded-full font-medium text-white/70 transition-all hover:text-white"
               style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}
             >
-              dinqdigital@gmail.com
+              dinqdigital[at]gmail.com
             </a>
           </div>
         </div>
