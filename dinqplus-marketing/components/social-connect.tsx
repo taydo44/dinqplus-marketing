@@ -65,7 +65,7 @@ export function SocialConnect() {
       }}
     >
       {socials.map((s) => (
-        
+        <a
           key={s.name}
           href={s.href}
           target="_blank"
