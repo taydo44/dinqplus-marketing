@@ -8,6 +8,6 @@ export const metadata: Metadata = {
     title: "Dinq+ Verticals — Find your industry",
     description:
       "6 verticals live, 16 coming soon. One platform built for every type of Ethiopian business.",
-    images: [{ url: "/og.png", width: 1200, height: 630 }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
 }

@@ -43,7 +43,7 @@ export const metadata: Metadata = {
       "One platform built for Ethiopian businesses — wherever you are in the world. Pick your vertical, start free for 7 days.",
     images: [
       {
-        url: "/og.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "Dinq+ — Software for Ethiopian entrepreneurs worldwide",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: "Dinq+ — Software for Ethiopian entrepreneurs worldwide",
     description:
       "One platform built for Ethiopian businesses — wherever you are in the world.",
-    images: ["/og.png"],
+    images: ["/opengraph-image"],
     creator: "@dinqdigital",
   },
   icons: {

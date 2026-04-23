@@ -8,6 +8,6 @@ export const metadata: Metadata = {
     title: "Dinq+ Pricing — Start free for 7 days",
     description:
       "Transparent pricing for every vertical. 7-day free trial, no credit card required.",
-    images: [{ url: "/og.png", width: 1200, height: 630 }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
 }

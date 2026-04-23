@@ -8,6 +8,6 @@ export const metadata: Metadata = {
     title: "Dinq Digital Studio — We build what we sell",
     description:
       "Ethiopian-founded, Seattle-based. Custom software for Ethiopian entrepreneurs everywhere.",
-    images: [{ url: "/og.png", width: 1200, height: 630 }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630 }],
   },
 }
