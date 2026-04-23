@@ -1,4 +1,6 @@
 "use client"
+import { Navbar } from "@/components/navbar"
+"use client"
 import { useRouter } from "next/navigation"
 import { Globe } from "@/components/globe"
 import { Gallery } from "@/components/gallery"
@@ -12,25 +14,7 @@ export default function StudioPage() {
     <div style={{ background: "linear-gradient(135deg, #0A0A0F 0%, #1a0a2e 50%, #0f0820 100%)", minHeight: "100vh" }}>
 
       {/* Header */}
-      <header className="flex items-center justify-between p-6">
-        <span
-          onClick={() => router.push("/")}
-          className="text-2xl font-black text-white cursor-pointer tracking-tight"
-        >
-          Dinq<sup className="text-base" style={{ background: "linear-gradient(135deg, #a78bfa, #ffffff, #7F77DD)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>+</sup>
-        </span>
-        <nav className="flex items-center gap-1">
-          <a href="/" className="text-white/70 hover:text-white text-xs px-3 py-2 rounded-full hover:bg-white/10 transition-all">Home</a>
-          <a href="/verticals" className="text-white/70 hover:text-white text-xs px-3 py-2 rounded-full hover:bg-white/10 transition-all">Verticals</a>
-          <a href="/pricing" className="text-white/70 hover:text-white text-xs px-3 py-2 rounded-full hover:bg-white/10 transition-all">Pricing</a>
-        </nav>
-        <button
-          onClick={() => window.open("https://app.dinqdigital.com/login", "_blank")}
-          className="px-5 py-2 rounded-full bg-white text-black text-xs font-medium cursor-pointer border-none"
-        >
-          Login
-        </button>
-      </header>
+      <Navbar />
 
       {/* Hero */}
       <section className="px-8 pt-16 pb-12 text-center">
