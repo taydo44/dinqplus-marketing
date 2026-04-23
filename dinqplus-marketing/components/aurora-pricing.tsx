@@ -59,7 +59,7 @@ export default function AuroraPricing() {
     visible: (i: number) => ({
       opacity: 1,
       y: 0,
-      transition: { delay: i * 0.15 + 0.3, duration: 0.6, ease: "easeInOut" },
+      transition: { delay: i * 0.15 + 0.3, duration: 0.6, ease: "easeInOut" as const },
     }),
   }
 
