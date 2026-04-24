@@ -1,103 +1,36 @@
-"use client";
+"use client"
 
-import React from "react";
+import React from "react"
 
 const SparklesIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="text-emerald-400"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400">
     <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
-    <path d="M20 2v4" />
-    <path d="M22 4h-4" />
-    <circle cx="4" cy="20" r="2" />
+    <path d="M20 2v4" /><path d="M22 4h-4" /><circle cx="4" cy="20" r="2" />
   </svg>
-);
+)
 
 const BriefcaseIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="text-blue-400"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400">
     <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
     <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
   </svg>
-);
+)
 
 const BuildingIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.5"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    className="text-purple-400"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-purple-400">
     <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
     <path d="M9 9h6v6H9z" />
     <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
   </svg>
-);
+)
 
 const CheckIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="12"
-    height="12"
-    viewBox="0 0 24 24"
-    fill="hsl(240, 15%, 9%)"
-    stroke="hsl(240, 15%, 9%)"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="hsl(240, 15%, 9%)" stroke="hsl(240, 15%, 9%)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 6 9 17l-5-5" />
   </svg>
-);
+)
 
-function PricingCard({
-  planName,
-  description,
-  price,
-  priceDescription,
-  features,
-  icon,
-  iconBgClass,
-  isPopular,
-  buttonText,
-  onClick,
-}: {
-  planName: string;
-  description: string;
-  price: string;
-  priceDescription: string;
-  features: string[];
-  icon: React.ReactNode;
-  iconBgClass: string;
-  isPopular: boolean;
-  buttonText: string;
-  onClick: () => void;
-}) {
+function PricingCard({ planName, description, price, priceDescription, features, icon, iconBgClass, isPopular, buttonText, onClick }) {
   const cardStyle = {
     width: "19rem",
     backgroundColor: "hsla(240, 15%, 9%, 1)",
@@ -109,37 +42,36 @@ function PricingCard({
       " radial-gradient(at 41% 94%, hsla(284, 100%, 84%, 1) 0px, transparent 85%)," +
       " radial-gradient(at 100% 99%, hsla(306, 100%, 57%, 1) 0px, transparent 85%)",
     boxShadow: "0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset",
-  };
+  }
 
-  const borderContainerStyle: React.CSSProperties = {
+  const borderContainerStyle = {
     overflow: "hidden",
     pointerEvents: "none",
     position: "absolute",
-    zIndex: -10,
+    zIndex: "-10",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
     width: "calc(100% + 2px)",
     height: "calc(100% + 2px)",
-    backgroundImage:
-      "linear-gradient(0deg, hsl(0, 0%, 100%) -50%, hsl(0, 0%, 40%) 100%)",
+    backgroundImage: "linear-gradient(0deg, hsl(0, 0%, 100%) -50%, hsl(0, 0%, 40%) 100%)",
     borderRadius: "1rem",
-  };
+  }
 
-  const rotatingBorderStyle: React.CSSProperties = {
+  const rotatingBorderStyle = {
+    content: '""',
     pointerEvents: "none",
     position: "fixed",
-    zIndex: 200,
+    zIndex: "200",
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%) rotate(0deg)",
     transformOrigin: "left",
     width: "200%",
     height: "10rem",
-    backgroundImage:
-      "linear-gradient(0deg, hsla(0, 0%, 100%, 0) 0%, hsl(277, 95%, 60%) 40%, hsl(277, 95%, 60%) 60%, hsla(0, 0%, 40%, 0) 100%)",
+    backgroundImage: "linear-gradient(0deg, hsla(0, 0%, 100%, 0) 0%, hsl(277, 95%, 60%) 40%, hsl(277, 95%, 60%) 60%, hsla(0, 0%, 40%, 0) 100%)",
     animation: "rotate 8s linear infinite",
-  };
+  }
 
   return (
     <div
@@ -163,15 +95,11 @@ function PricingCard({
 
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div
-              className={`h-10 w-10 rounded-xl border border-white/20 bg-gradient-to-br ${iconBgClass} flex items-center justify-center`}
-            >
+            <div className={`h-10 w-10 rounded-xl border border-white/20 bg-gradient-to-br ${iconBgClass} flex items-center justify-center`}>
               {icon}
             </div>
             <div>
-              <h3 className="text-xl font-medium tracking-tight text-white">
-                {planName}
-              </h3>
+              <h3 className="text-xl font-medium tracking-tight text-white">{planName}</h3>
               <p className="text-xs text-neutral-500">{description}</p>
             </div>
           </div>
@@ -180,14 +108,10 @@ function PricingCard({
 
         <div className="mb-6">
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-semibold tracking-tight text-white">
-              {price}
-            </span>
+            <span className="text-4xl font-semibold tracking-tight text-white">{price}</span>
             <span className="text-sm text-neutral-400">{priceDescription}</span>
           </div>
-          <p className="text-xs text-neutral-500 mt-1">
-            No credit card required
-          </p>
+          <p className="text-xs text-neutral-500 mt-1">No credit card required</p>
         </div>
 
         <ul className="space-y-3 text-sm text-neutral-300">
@@ -203,15 +127,12 @@ function PricingCard({
       </div>
 
       <div className="mt-6">
-        <button
-          onClick={onClick}
-          className="w-full h-12 bg-white rounded-lg text-neutral-900 font-bold hover:bg-neutral-200 transition-colors cursor-pointer border-none"
-        >
+        <button onClick={onClick} className="w-full h-12 bg-white rounded-lg text-neutral-900 font-bold hover:bg-neutral-200 transition-colors cursor-pointer border-none">
           {buttonText}
         </button>
       </div>
     </div>
-  );
+  )
 }
 
 export default function AuroraPricing() {
@@ -222,17 +143,11 @@ export default function AuroraPricing() {
     priceDescription: "/ month",
     icon: <SparklesIcon />,
     iconBgClass: "from-emerald-500/20 to-teal-500/20",
-    features: [
-      "DinqBook, DinqShop or DinqProp",
-      "Unlimited clients & records",
-      "Invoicing & payments",
-      "Analytics dashboard",
-      "7-day free trial",
-    ],
+    features: ["DinqBook, DinqShop or DinqProp", "Unlimited clients & records", "Invoicing & payments", "Analytics dashboard", "7-day free trial"],
     buttonText: "Start free trial",
     isPopular: false,
     onClick: () => window.open("https://app.dinqdigital.com/signup", "_blank"),
-  };
+  }
 
   const proPlan = {
     planName: "Pro",
@@ -241,17 +156,11 @@ export default function AuroraPricing() {
     priceDescription: "/ month",
     icon: <BriefcaseIcon />,
     iconBgClass: "from-blue-500/20 to-cyan-500/20",
-    features: [
-      "DinqAgency or DinqCare",
-      "Multi-role team access",
-      "Advanced workflows",
-      "Priority support",
-      "7-day free trial",
-    ],
+    features: ["DinqAgency or DinqCare", "Multi-role team access", "Advanced workflows", "Priority support", "7-day free trial"],
     buttonText: "Start free trial",
     isPopular: true,
     onClick: () => window.open("https://app.dinqdigital.com/signup", "_blank"),
-  };
+  }
 
   const customPlan = {
     planName: "Custom",
@@ -260,18 +169,11 @@ export default function AuroraPricing() {
     priceDescription: "",
     icon: <BuildingIcon />,
     iconBgClass: "from-purple-500/20 to-indigo-500/20",
-    features: [
-      "DinqFactory + all verticals",
-      "Custom vertical development",
-      "Dedicated account manager",
-      "Custom integrations & SLA",
-    ],
+    features: ["DinqFactory + all verticals", "Custom vertical development", "Dedicated account manager", "Custom integrations & SLA"],
     buttonText: "Contact us",
     isPopular: false,
-    onClick: () => {
-      window.location.href = "mailto:dinqdigital@gmail.com";
-    },
-  };
+    onClick: () => { window.location.href = "mailto:dinqdigital@gmail.com" },
+  }
 
   return (
     <div className="min-h-screen w-full bg-neutral-950 flex flex-col items-center justify-center p-8">
@@ -289,5 +191,5 @@ export default function AuroraPricing() {
         <PricingCard {...customPlan} />
       </div>
     </div>
-  );
+  )
 }
