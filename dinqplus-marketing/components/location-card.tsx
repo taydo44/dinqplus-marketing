@@ -59,12 +59,7 @@ export function LocationCard({ city, address, imageUrl, directionsUrl, className
           
             href={directionsUrl}
             target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90"
-            style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)" }}
-          >
-            Get directions
-          </a>
+            <a href={directionsUrl} target="_blank" rel="noopener noreferrer" className="px-4 py-2 rounded-lg text-sm font-medium text-white transition-all hover:opacity-90" style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.2)" }}>Get directions</a>
         </div>
       </div>
     </motion.div>
