@@ -35,7 +35,7 @@ const plans = [
   {
     name: "Starter",
     description: "Perfect for salons, auto shops and property managers",
-    price: "",
+    price: "$29",
     priceDescription: "/ month",
     icon: <SparklesIcon />,
     iconBgClass: "from-emerald-500/20 to-teal-500/20",
@@ -47,7 +47,7 @@ const plans = [
   {
     name: "Pro",
     description: "For agencies and care businesses needing more power",
-    price: "",
+    price: "$49",
     priceDescription: "/ month",
     icon: <BriefcaseIcon />,
     iconBgClass: "from-blue-500/20 to-cyan-500/20",
