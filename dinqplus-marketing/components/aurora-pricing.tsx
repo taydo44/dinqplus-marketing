@@ -165,7 +165,7 @@ const AuroraPricing = () => {
             animate="visible"
             whileHover={{ y: -10, scale: 1.02 }}
             className={cn(
-              "relative p-8 rounded-2xl border border-gray-700/50 overflow-hidden",
+              "relative p-8 rounded-2xl border border-gray-700/50 overflow-hidden min-h-[480px] flex flex-col",
               plan.isFeatured
                 ? "bg-gray-900/80"
                 : "bg-gray-950/50 backdrop-blur-sm"
@@ -182,7 +182,7 @@ const AuroraPricing = () => {
                 MOST POPULAR
               </div>
             )}
-            <div className="relative z-10 flex flex-col h-full">
+            <div className="relative z-10 flex flex-col h-full gap-2">
               <h3 className="text-2xl font-semibold text-white">{plan.name}</h3>
               <p className="text-gray-400 mt-2">{plan.description}</p>
 
