@@ -1,4 +1,3 @@
-﻿// v2
 "use client"
 
 import React from "react"
@@ -31,92 +30,53 @@ const CheckIcon = () => (
   </svg>
 )
 
-const plans = [
-  {
-    name: "Starter",
-    description: "Perfect for salons, auto shops and property managers",
-    price: "$29",
-    priceDescription: "/ month",
-    icon: <SparklesIcon />,
-    iconBgClass: "from-emerald-500/20 to-teal-500/20",
-    features: ["DinqBook, DinqShop or DinqProp", "Unlimited clients & records", "Invoicing & payments", "Analytics dashboard", "7-day free trial"],
-    buttonText: "Start free trial",
-    buttonAction: "signup",
-    isPopular: false,
-  },
-  {
-    name: "Pro",
-    description: "For agencies and care businesses needing more power",
-    price: "$49",
-    priceDescription: "/ month",
-    icon: <BriefcaseIcon />,
-    iconBgClass: "from-blue-500/20 to-cyan-500/20",
-    features: ["DinqAgency or DinqCare", "Multi-role team access", "Advanced workflows", "Priority support", "7-day free trial"],
-    buttonText: "Start free trial",
-    buttonAction: "signup",
-    isPopular: true,
-  },
-  {
-    name: "Custom",
-    description: "For large organizations with custom needs",
-    price: "Let's talk",
-    priceDescription: "",
-    icon: <BuildingIcon />,
-    iconBgClass: "from-purple-500/20 to-indigo-500/20",
-    features: ["DinqFactory + all verticals", "Custom vertical development", "Dedicated account manager", "Custom integrations & SLA"],
-    buttonText: "Contact us",
-    buttonAction: "contact",
-    isPopular: false,
-  },
-]
+function PricingCard({ planName, description, price, priceDescription, features, icon, iconBgClass, isPopular, buttonText, onClick }) {
+  const cardStyle = {
+    width: "19rem",
+    backgroundColor: "hsla(240, 15%, 9%, 1)",
+    backgroundImage:
+      "radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%), radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%), radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%), radial-gradient(at 0% 64%, hsla(263, 93%, 56%, 1) 0px, transparent 85%), radial-gradient(at 41% 94%, hsla(284, 100%, 84%, 1) 0px, transparent 85%), radial-gradient(at 100% 99%, hsla(306, 100%, 57%, 1) 0px, transparent 85%)",
+    boxShadow: "0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset",
+  }
 
-function PricingCard({ plan }: { plan: typeof plans[0] }) {
   return (
-    <div
-      className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 flex flex-col"
-      style={{
-        width: "19rem",
-        backgroundColor: "hsla(240, 15%, 9%, 1)",
-        backgroundImage: "radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%), radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%), radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%), radial-gradient(at 0% 64%, hsla(263, 93%, 56%, 1) 0px, transparent 85%), radial-gradient(at 41% 94%, hsla(284, 100%, 84%, 1) 0px, transparent 85%), radial-gradient(at 100% 99%, hsla(306, 100%, 57%, 1) 0px, transparent 85%)",
-        boxShadow: "0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset", minHeight: "420px",
-      }}
-    >
+    <div className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 flex flex-col" style={cardStyle}>
       <style>{`@keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }`}</style>
 
-      {plan.isPopular && (
+      {isPopular && (
         <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
           <span className="bg-purple-600 text-white text-xs font-semibold px-4 py-1 rounded-full">MOST POPULAR</span>
         </div>
       )}
 
       <div className="flex-grow">
-        <div style={{ overflow: "hidden", pointerEvents: "none", position: "absolute", zIndex: -10, top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "calc(100% + 2px)", height: "calc(100% + 2px)", backgroundImage: "linear-gradient(0deg, hsl(0, 0%, 100%) -50%, hsl(0, 0%, 40%) 100%)", borderRadius: "1rem" }}>
-          <div style={{ pointerEvents: "none", position: "fixed", zIndex: 200, top: "50%", left: "50%", transform: "translate(-50%, -50%) rotate(0deg)", transformOrigin: "left", width: "200%", height: "10rem", backgroundImage: "linear-gradient(0deg, hsla(0, 0%, 100%, 0) 0%, hsl(277, 95%, 60%) 40%, hsl(277, 95%, 60%) 60%, hsla(0, 0%, 40%, 0) 100%)", animation: "rotate 8s linear infinite" }} />
+        <div style={{ overflow: "hidden", pointerEvents: "none", position: "absolute", zIndex: "-10", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "calc(100% + 2px)", height: "calc(100% + 2px)", backgroundImage: "linear-gradient(0deg, hsl(0, 0%, 100%) -50%, hsl(0, 0%, 40%) 100%)", borderRadius: "1rem" }}>
+          <div style={{ pointerEvents: "none", position: "fixed", zIndex: "200", top: "50%", left: "50%", transform: "translate(-50%, -50%) rotate(0deg)", transformOrigin: "left", width: "200%", height: "10rem", backgroundImage: "linear-gradient(0deg, hsla(0, 0%, 100%, 0) 0%, hsl(277, 95%, 60%) 40%, hsl(277, 95%, 60%) 60%, hsla(0, 0%, 40%, 0) 100%)", animation: "rotate 8s linear infinite" }}></div>
         </div>
 
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className={`h-10 w-10 rounded-xl border border-white/20 bg-gradient-to-br ${plan.iconBgClass} flex items-center justify-center`}>{plan.icon}</div>
+            <div className={`h-10 w-10 rounded-xl border border-white/20 bg-gradient-to-br ${iconBgClass} flex items-center justify-center`}>{icon}</div>
             <div>
-              <h3 className="text-xl font-medium tracking-tight text-white">{plan.name}</h3>
-              <p className="text-xs text-neutral-500">{plan.description}</p>
+              <h3 className="text-xl font-medium tracking-tight text-white">{planName}</h3>
+              <p className="text-xs text-neutral-500">{description}</p>
             </div>
           </div>
-          <div className="h-5 w-5 rounded-full border-2 border-white/30" />
+          <div className="h-5 w-5 rounded-full border-2 border-white/30"></div>
         </div>
 
         <div className="mb-6">
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-semibold tracking-tight text-white">{plan.price}</span>
-            <span className="text-sm text-neutral-400">{plan.priceDescription}</span>
+            <span className="text-4xl font-semibold tracking-tight text-white">{price}</span>
+            <span className="text-sm text-neutral-400">{priceDescription}</span>
           </div>
           <p className="text-xs text-neutral-500 mt-1">No credit card required</p>
         </div>
 
         <ul className="space-y-3 text-sm text-neutral-300">
-          {plan.features.map((feature, idx) => (
+          {features.map((feature, idx) => (
             <li key={idx} className="flex items-start gap-3">
-              <div className="flex items-center justify-center w-4 h-4 bg-violet-500 rounded-full flex-shrink-0 mt-0.5"><CheckIcon /></div>
+              <div className="flex items-center justify-center w-4 h-4 bg-violet-500 rounded-full"><CheckIcon /></div>
               {feature}
             </li>
           ))}
@@ -124,28 +84,62 @@ function PricingCard({ plan }: { plan: typeof plans[0] }) {
       </div>
 
       <div className="mt-6">
-        <button
-          onClick={() => { if (plan.buttonAction === "contact") { window.location.href = "mailto:dinqdigital@gmail.com" } else { window.open("https://app.dinqdigital.com/signup", "_blank") } }}
-          className="w-full h-12 bg-white rounded-lg text-neutral-900 font-bold hover:bg-neutral-200 transition-colors cursor-pointer border-none"
-        >
-          {plan.buttonText}
-        </button>
+        <button onClick={onClick} className="w-full h-12 bg-white rounded-lg text-neutral-900 font-bold hover:bg-neutral-200 transition-colors cursor-pointer border-none">{buttonText}</button>
       </div>
     </div>
   )
 }
 
 export default function AuroraPricing() {
+  const starterPlan = {
+    planName: "Starter",
+    description: "Perfect for salons, auto shops and property managers",
+    price: "$29",
+    priceDescription: "/ month",
+    icon: <SparklesIcon />,
+    iconBgClass: "from-emerald-500/20 to-teal-500/20",
+    features: ["DinqBook, DinqShop or DinqProp", "Unlimited clients & records", "Invoicing & payments", "Analytics dashboard", "7-day free trial"],
+    buttonText: "Start free trial",
+    isPopular: false,
+    onClick: () => window.open("https://app.dinqdigital.com/signup", "_blank"),
+  }
+
+  const proPlan = {
+    planName: "Pro",
+    description: "For agencies and care businesses needing more power",
+    price: "$49",
+    priceDescription: "/ month",
+    icon: <BriefcaseIcon />,
+    iconBgClass: "from-blue-500/20 to-cyan-500/20",
+    features: ["DinqAgency or DinqCare", "Multi-role team access", "Advanced workflows", "Priority support", "7-day free trial"],
+    buttonText: "Start free trial",
+    isPopular: true,
+    onClick: () => window.open("https://app.dinqdigital.com/signup", "_blank"),
+  }
+
+  const customPlan = {
+    planName: "Custom",
+    description: "For large organizations with custom needs",
+    price: "Let's talk",
+    priceDescription: "",
+    icon: <BuildingIcon />,
+    iconBgClass: "from-purple-500/20 to-indigo-500/20",
+    features: ["DinqFactory + all verticals", "Custom vertical development", "Dedicated account manager", "Custom integrations & SLA"],
+    buttonText: "Contact us",
+    isPopular: false,
+    onClick: () => { window.location.href = "mailto:dinqdigital@gmail.com" },
+  }
+
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center p-8" style={{ background: "linear-gradient(135deg, #0A0A0F 0%, #1a0a2e 50%, #0f0820 100%)" }}>
+    <div className="min-h-screen w-full bg-neutral-950 flex flex-col items-center justify-center p-8">
       <div className="text-center mb-16">
-        <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4">Find the plan that's right for you</h1>
-        <p className="text-lg text-neutral-400">Start for free and scale up as you grow. No credit card required.</p>
+        <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">Find the plan that's right for you</h1>
+        <p className="mt-4 text-lg text-neutral-400">Start for free and scale up as you grow. No credit card required.</p>
       </div>
       <div className="flex flex-col lg:flex-row items-center justify-center gap-8">
-        {plans.map((plan) => (
-          <PricingCard key={plan.name} plan={plan} />
-        ))}
+        <PricingCard {...starterPlan} />
+        <PricingCard {...proPlan} />
+        <PricingCard {...customPlan} />
       </div>
     </div>
   )
