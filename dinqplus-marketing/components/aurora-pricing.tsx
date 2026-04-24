@@ -1,15 +1,43 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle, Zap } from "lucide-react"
 import { useRouter } from "next/navigation"
+
+const SparklesIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-emerald-400">
+    <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
+    <path d="M20 2v4" /><path d="M22 4h-4" /><circle cx="4" cy="20" r="2" />
+  </svg>
+)
+
+const BriefcaseIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-blue-400">
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  </svg>
+)
+
+const BuildingIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-purple-400">
+    <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+    <path d="M9 9h6v6H9z" />
+    <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
+  </svg>
+)
+
+const CheckIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="hsl(240, 15%, 9%)" stroke="hsl(240, 15%, 9%)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+)
 
 const plans = [
   {
     name: "Starter",
-    price: { monthly: 29, yearly: 23 },
-    description: "Perfect for salons, auto shops and property managers.",
+    description: "Perfect for salons, auto shops and property managers",
+    price: "$29",
+    priceDescription: "/ month",
+    icon: <SparklesIcon />,
+    iconBgClass: "from-emerald-500/20 to-teal-500/20",
     features: [
       "DinqBook, DinqShop or DinqProp",
       "Unlimited clients & records",
@@ -17,13 +45,17 @@ const plans = [
       "Analytics dashboard",
       "7-day free trial",
     ],
-    isFeatured: false,
-    verticals: "DinqBook · DinqShop · DinqProp",
+    buttonText: "Start free trial",
+    buttonAction: "signup",
+    isPopular: false,
   },
   {
     name: "Pro",
-    price: { monthly: 49, yearly: 39 },
-    description: "For agencies and care businesses needing more power.",
+    description: "For agencies and care businesses needing more power",
+    price: "$49",
+    priceDescription: "/ month",
+    icon: <BriefcaseIcon />,
+    iconBgClass: "from-blue-500/20 to-cyan-500/20",
     features: [
       "DinqAgency or DinqCare",
       "Multi-role team access",
@@ -31,191 +63,163 @@ const plans = [
       "Priority support",
       "7-day free trial",
     ],
-    isFeatured: true,
-    verticals: "DinqAgency · DinqCare",
+    buttonText: "Start free trial",
+    buttonAction: "signup",
+    isPopular: true,
   },
   {
-    name: "Factory",
-    price: { monthly: 79, yearly: 63 },
-    description: "Full manufacturing operations with 4 role types.",
+    name: "Custom",
+    description: "For large organizations with custom needs",
+    price: "Let's talk",
+    priceDescription: "",
+    icon: <BuildingIcon />,
+    iconBgClass: "from-purple-500/20 to-indigo-500/20",
     features: [
-      "DinqFactory vertical",
-      "4 roles: admin, store, production, marketing",
-      "Inventory management",
-      "Production tracking",
-      "7-day free trial",
+      "DinqFactory + all verticals",
+      "Custom vertical development",
+      "Dedicated account manager",
+      "Custom integrations & SLA",
     ],
-    isFeatured: false,
-    verticals: "DinqFactory",
+    buttonText: "Contact us",
+    buttonAction: "contact",
+    isPopular: false,
   },
 ]
 
-export default function AuroraPricing() {
-  const [billingCycle, setBillingCycle] = useState<"monthly" | "yearly">("monthly")
+function PricingCard({ plan }: { plan: typeof plans[0] }) {
   const router = useRouter()
 
-  const fadeUpVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: i * 0.15 + 0.3, duration: 0.6, ease: "easeInOut" as const },
-    }),
+  const cardStyle = {
+    width: "100%",
+    backgroundColor: "hsla(240, 15%, 9%, 1)",
+    backgroundImage:
+      "radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%)," +
+      "radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%)," +
+      "radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%)," +
+      "radial-gradient(at 0% 64%, hsla(263, 93%, 56%, 1) 0px, transparent 85%)," +
+      "radial-gradient(at 41% 94%, hsla(284, 100%, 84%, 1) 0px, transparent 85%)," +
+      "radial-gradient(at 100% 99%, hsla(306, 100%, 57%, 1) 0px, transparent 85%)",
+    boxShadow: "0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset",
+  }
+
+  const borderContainerStyle: React.CSSProperties = {
+    overflow: "hidden",
+    pointerEvents: "none",
+    position: "absolute",
+    zIndex: -10,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "calc(100% + 2px)",
+    height: "calc(100% + 2px)",
+    backgroundImage: "linear-gradient(0deg, hsl(0, 0%, 100%) -50%, hsl(0, 0%, 40%) 100%)",
+    borderRadius: "1rem",
+  }
+
+  const rotatingBorderStyle: React.CSSProperties = {
+    pointerEvents: "none",
+    position: "fixed",
+    zIndex: 200,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%) rotate(0deg)",
+    transformOrigin: "left",
+    width: "200%",
+    height: "10rem",
+    backgroundImage: "linear-gradient(0deg, hsla(0, 0%, 100%, 0) 0%, hsl(277, 95%, 60%) 40%, hsl(277, 95%, 60%) 60%, hsla(0, 0%, 40%, 0) 100%)",
+    animation: "rotate 8s linear infinite",
   }
 
   return (
     <div
-      className="relative w-full flex flex-col items-center justify-center px-8 py-24 overflow-hidden"
+      className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 flex flex-col"
+      style={cardStyle}
+    >
+      <style>{`@keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }`}</style>
+
+      {plan.isPopular && (
+        <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
+          <span className="bg-purple-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
+            MOST POPULAR
+          </span>
+        </div>
+      )}
+
+      <div className="flex-grow">
+        <div style={borderContainerStyle}>
+          <div style={rotatingBorderStyle} />
+        </div>
+
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className={`h-10 w-10 rounded-xl border border-white/20 bg-gradient-to-br ${plan.iconBgClass} flex items-center justify-center`}>
+              {plan.icon}
+            </div>
+            <div>
+              <h3 className="text-xl font-medium tracking-tight text-white">{plan.name}</h3>
+              <p className="text-xs text-neutral-500">{plan.description}</p>
+            </div>
+          </div>
+          <div className="h-5 w-5 rounded-full border-2 border-white/30" />
+        </div>
+
+        <div className="mb-6">
+          <div className="flex items-baseline gap-2">
+            <span className="text-4xl font-semibold tracking-tight text-white">{plan.price}</span>
+            <span className="text-sm text-neutral-400">{plan.priceDescription}</span>
+          </div>
+          <p className="text-xs text-neutral-500 mt-1">No credit card required</p>
+        </div>
+
+        <ul className="space-y-3 text-sm text-neutral-300">
+          {plan.features.map((feature, idx) => (
+            <li key={idx} className="flex items-start gap-3">
+              <div className="flex items-center justify-center w-4 h-4 bg-violet-500 rounded-full flex-shrink-0 mt-0.5">
+                <CheckIcon />
+              </div>
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-6">
+        <button
+          onClick={() => {
+            if (plan.buttonAction === "contact") {
+              window.location.href = "mailto:dinqdigital@gmail.com"
+            } else {
+              window.open("https://app.dinqdigital.com/signup", "_blank")
+            }
+          }}
+          className="w-full h-12 bg-white rounded-lg text-neutral-900 font-bold hover:bg-neutral-200 transition-colors cursor-pointer border-none"
+        >
+          {plan.buttonText}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export default function AuroraPricing() {
+  return (
+    <div
+      className="relative w-full flex flex-col items-center px-8 py-24"
       style={{ background: "linear-gradient(135deg, #0A0A0F 0%, #1a0a2e 50%, #0f0820 100%)" }}
     >
-      {/* Aurora background */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none overflow-hidden">
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: "600px", height: "600px",
-            background: "rgba(107,33,168,0.6)",
-            top: "10%", left: "10%",
-            filter: "blur(100px)",
-            animation: "moveAurora1 20s infinite alternate ease-in-out",
-          }}
-        />
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: "500px", height: "500px",
-            background: "rgba(79,70,229,0.5)",
-            bottom: "10%", right: "10%",
-            filter: "blur(100px)",
-            animation: "moveAurora2 25s infinite alternate ease-in-out",
-          }}
-        />
+      <div className="text-center mb-16">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight mb-4">
+          Simple, transparent pricing
+        </h1>
+        <p className="text-lg text-neutral-400">
+          Start free for 7 days. No credit card required.
+        </p>
       </div>
-
-      <style>{`
-        @keyframes moveAurora1 { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(100px,50px) rotate(180deg); } }
-        @keyframes moveAurora2 { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(-100px,-50px) rotate(-180deg); } }
-      `}</style>
-
-      <div className="relative z-10 flex flex-col items-center text-center mb-12">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          style={{
-            display: "inline-flex", alignItems: "center", gap: "8px",
-            padding: "6px 16px", borderRadius: "999px", marginBottom: "24px",
-            background: "rgba(107,33,168,0.15)",
-            border: "1px solid rgba(107,33,168,0.3)",
-          }}
-        >
-          <Zap className="h-4 w-4 text-purple-400" />
-          <span className="text-sm font-medium text-purple-300">Flexible & transparent pricing</span>
-        </motion.div>
-
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-          className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-8"
-        >
-          Simple pricing
-        </motion.h1>
-
-        {/* Toggle */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
-          className="flex items-center gap-4"
-        >
-          <span className={`text-lg ${billingCycle === "monthly" ? "text-white" : "text-white/40"}`}>Monthly</span>
-          <div
-            className="w-14 h-8 flex items-center rounded-full p-1 cursor-pointer"
-            style={{ background: "rgba(255,255,255,0.1)" }}
-            onClick={() => setBillingCycle(billingCycle === "monthly" ? "yearly" : "monthly")}
-          >
-            <motion.div
-              className="w-6 h-6 rounded-full"
-              style={{ background: "linear-gradient(135deg, #6B21A8, #4F46E5)" }}
-              layout
-              transition={{ type: "spring", stiffness: 700, damping: 30 }}
-              animate={{ marginLeft: billingCycle === "yearly" ? "auto" : "0" }}
-            />
+      <div className="flex flex-col lg:flex-row items-stretch justify-center gap-8 max-w-5xl w-full">
+        {plans.map((plan) => (
+          <div key={plan.name} className="flex-1">
+            <PricingCard plan={plan} />
           </div>
-          <span className={`text-lg ${billingCycle === "yearly" ? "text-white" : "text-white/40"}`}>Yearly</span>
-          <span className="text-sm text-purple-400 font-semibold">(Save 20%)</span>
-        </motion.div>
-      </div>
-
-      {/* Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl w-full relative z-10">
-        {plans.map((plan, index) => (
-          <motion.div
-            key={plan.name}
-            custom={index}
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
-            whileHover={{ y: -8, scale: 1.02 }}
-            className="relative p-8 rounded-2xl overflow-hidden flex flex-col"
-            style={{
-              background: plan.isFeatured ? "rgba(107,33,168,0.15)" : "rgba(255,255,255,0.03)",
-              border: plan.isFeatured ? "1px solid rgba(107,33,168,0.4)" : "1px solid rgba(255,255,255,0.08)",
-              boxShadow: plan.isFeatured ? "0 0 60px rgba(107,33,168,0.2)" : "none",
-            }}
-          >
-            {plan.isFeatured && (
-              <div
-                className="absolute top-0 right-0 text-xs font-bold px-4 py-1.5 rounded-bl-lg"
-                style={{ background: "linear-gradient(135deg, #6B21A8, #4F46E5)", color: "white" }}
-              >
-                MOST POPULAR
-              </div>
-            )}
-
-            <h3 className="text-2xl font-semibold text-white mb-2">{plan.name}</h3>
-            <p className="text-white/40 text-sm mb-1">{plan.verticals}</p>
-            <p className="text-white/50 text-sm mb-6">{plan.description}</p>
-
-            <div className="flex items-baseline mb-8">
-              <span className="text-white/40 text-2xl mr-1">$</span>
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={billingCycle}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.2 }}
-                  className="text-5xl font-bold text-white"
-                >
-                  {plan.price[billingCycle]}
-                </motion.span>
-              </AnimatePresence>
-              <span className="text-white/40 ml-2 text-sm">/{billingCycle === "monthly" ? "mo" : "mo, billed yearly"}</span>
-            </div>
-
-            <ul className="space-y-3 mb-8 flex-1">
-              {plan.features.map((feature) => (
-                <li key={feature} className="flex items-center gap-3 text-white/70 text-sm">
-                  <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-
-            <button
-              onClick={() => window.open("https://app.dinqdigital.com/signup", "_blank")}
-              className="w-full py-3 rounded-xl text-sm font-semibold transition-all cursor-pointer border-none"
-              style={
-                plan.isFeatured
-                  ? { background: "linear-gradient(135deg, #6B21A8, #4F46E5)", color: "white", boxShadow: "0 0 20px rgba(107,33,168,0.4)" }
-                  : { background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.1)" }
-              }
-            >
-              Start free trial
-            </button>
-          </motion.div>
         ))}
       </div>
     </div>
