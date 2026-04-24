@@ -5,6 +5,7 @@ import { Globe } from "@/components/globe"
 import { Gallery } from "@/components/gallery"
 import { LocationMap } from "@/components/location-map"
 import { SocialConnect } from "@/components/social-connect"
+import { Footer } from "@/components/footer"
 
 export default function StudioPage() {
   const router = useRouter()
@@ -126,6 +127,7 @@ export default function StudioPage() {
           </div>
         </div>
       </footer>
+      <Footer />
     </div>
   )
 }

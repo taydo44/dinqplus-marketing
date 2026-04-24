@@ -2,6 +2,7 @@
 import { Navbar } from "@/components/navbar"
 import AuroraPricing from "@/components/aurora-pricing"
 import { CountdownBanner } from "@/components/countdown-banner"
+import { Footer } from "@/components/footer"
 import { useRouter } from "next/navigation"
 
 const verticalPricing = [
@@ -59,6 +60,7 @@ export default function PricingPage() {
 
       {/* Countdown CTA */}
       <CountdownBanner />
+      <Footer />
     </div>
   )
 }
