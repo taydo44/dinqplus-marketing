@@ -2,7 +2,6 @@
 import { Navbar } from "@/components/navbar"
 import { GlowCard } from "@/components/glow-card"
 import OrbitalTimeline from "@/components/orbital-timeline"
-import { Footer } from "@/components/footer"
 import { useRouter } from "next/navigation"
 
 const activeVerticals = [
@@ -149,7 +148,6 @@ export default function VerticalsPage() {
         </div>
         <OrbitalTimeline />
       </section>
-      <Footer />
     </div>
   )
 }
