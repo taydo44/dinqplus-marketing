@@ -81,7 +81,7 @@ function PricingCard({ plan }: { plan: typeof plans[0] }) {
         boxShadow: "0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset",
       }}
     >
-      <style>{@keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }}</style>
+      <style>{`@keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }`}</style>
 
       {plan.isPopular && (
         <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
