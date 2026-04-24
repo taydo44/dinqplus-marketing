@@ -1,6 +1,7 @@
-import Hero from "@/components/hero"
+﻿import Hero from "@/components/hero"
 import { IntegrationCarousel } from "@/components/integration-carousel"
 import { FeatureCards } from "@/components/feature-cards"
+import { Footer } from "@/components/footer"
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       <Hero />
       <IntegrationCarousel />
       <FeatureCards />
+      <Footer />
     </div>
   )
 }
