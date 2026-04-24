@@ -30,7 +30,7 @@ const CheckIcon = () => (
   </svg>
 )
 
-function PricingCard({ planName, description, price, priceDescription, features, icon, iconBgClass, isPopular, buttonText, onClick }) {
+function PricingCard({ planName, description, price, priceDescription, features, icon, iconBgClass, isPopular, buttonText, onClick }: { planName: string; description: string; price: string; priceDescription: string; features: string[]; icon: React.ReactNode; iconBgClass: string; isPopular: boolean; buttonText: string; onClick: () => void }) {
   const cardStyle = {
     width: "19rem",
     backgroundColor: "hsla(240, 15%, 9%, 1)",
