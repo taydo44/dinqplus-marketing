@@ -78,7 +78,7 @@ function PricingCard({ plan }: { plan: typeof plans[0] }) {
         width: "19rem",
         backgroundColor: "hsla(240, 15%, 9%, 1)",
         backgroundImage: "radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%), radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%), radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%), radial-gradient(at 0% 64%, hsla(263, 93%, 56%, 1) 0px, transparent 85%), radial-gradient(at 41% 94%, hsla(284, 100%, 84%, 1) 0px, transparent 85%), radial-gradient(at 100% 99%, hsla(306, 100%, 57%, 1) 0px, transparent 85%)",
-        boxShadow: "0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset",
+        boxShadow: "0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset", minHeight: "420px",
       }}
     >
       <style>{`@keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }`}</style>
