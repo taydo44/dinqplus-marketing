@@ -107,11 +107,7 @@ export default function StudioPage() {
             </button>
             
               href="mailto:dinqdigital@gmail.com"
-              className="px-8 py-4 rounded-full font-medium transition-all hover:text-white"
-              style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.7)" }}
-            >
-              <span>dinqdigital@gmail.com</span>
-            </a>
+            <a href="mailto:dinqdigital@gmail.com" className="px-8 py-4 rounded-full font-medium transition-all hover:text-white" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.7)" }}>dinqdigital@gmail.com</a>
           </div>
         </div>
       </section>
