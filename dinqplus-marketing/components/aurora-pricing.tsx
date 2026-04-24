@@ -96,7 +96,7 @@ function PricingCard({ plan }: { plan: typeof plans[0] }) {
 
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <div className={h-10 w-10 rounded-xl border border-white/20 bg-gradient-to-br  flex items-center justify-center}>{plan.icon}</div>
+            <div className={`h-10 w-10 rounded-xl border border-white/20 bg-gradient-to-br ${plan.iconBgClass} flex items-center justify-center`}>{plan.icon}</div>
             <div>
               <h3 className="text-xl font-medium tracking-tight text-white">{plan.name}</h3>
               <p className="text-xs text-neutral-500">{plan.description}</p>
