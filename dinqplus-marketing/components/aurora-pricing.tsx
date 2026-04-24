@@ -23,8 +23,9 @@ const AuroraPricing = () => {
         "7-day free trial",
       ],
       isFeatured: false,
-      action: () => window.open("https://app.dinqdigital.com/signup", "_blank"),
       buttonText: "Start free trial",
+      onClick: () =>
+        window.open("https://app.dinqdigital.com/signup", "_blank"),
     },
     {
       name: "Pro",
@@ -38,8 +39,9 @@ const AuroraPricing = () => {
         "7-day free trial",
       ],
       isFeatured: true,
-      action: () => window.open("https://app.dinqdigital.com/signup", "_blank"),
       buttonText: "Start free trial",
+      onClick: () =>
+        window.open("https://app.dinqdigital.com/signup", "_blank"),
     },
     {
       name: "Custom",
@@ -52,10 +54,10 @@ const AuroraPricing = () => {
         "Custom integrations & SLA",
       ],
       isFeatured: false,
-      action: () => {
+      buttonText: "Contact us",
+      onClick: () => {
         window.location.href = "mailto:dinqdigital@gmail.com";
       },
-      buttonText: "Contact us",
     },
   ];
 
@@ -98,9 +100,9 @@ const AuroraPricing = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 mb-6"
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-6"
         >
-          <Zap className="h-4 w-4 text-purple-300" />
+          <Zap className="h-4 w-4 text-indigo-300" />
           <span className="text-sm font-medium text-gray-200">
             Flexible & Transparent Pricing
           </span>
@@ -135,7 +137,7 @@ const AuroraPricing = () => {
             }
           >
             <motion.div
-              className="w-6 h-6 bg-purple-500 rounded-full"
+              className="w-6 h-6 bg-indigo-500 rounded-full"
               layout
               transition={{ type: "spring", stiffness: 700, damping: 30 }}
               style={{ marginLeft: billingCycle === "yearly" ? "auto" : "0" }}
@@ -149,7 +151,7 @@ const AuroraPricing = () => {
           >
             Yearly
           </span>
-          <span className="text-sm text-purple-400 font-semibold">
+          <span className="text-sm text-indigo-400 font-semibold">
             (Save 20%)
           </span>
         </motion.div>
@@ -165,7 +167,7 @@ const AuroraPricing = () => {
             animate="visible"
             whileHover={{ y: -10, scale: 1.02 }}
             className={cn(
-              "relative p-8 rounded-2xl border border-gray-700/50 overflow-hidden min-h-[480px] flex flex-col",
+              "relative p-8 rounded-2xl border border-gray-700/50 overflow-hidden",
               plan.isFeatured
                 ? "bg-gray-900/80"
                 : "bg-gray-950/50 backdrop-blur-sm"
@@ -178,11 +180,11 @@ const AuroraPricing = () => {
               )}
             ></div>
             {plan.isFeatured && (
-              <div className="absolute top-0 right-0 text-xs font-bold text-white bg-purple-600 px-4 py-1.5 rounded-bl-lg">
+              <div className="absolute top-0 right-0 text-xs font-bold text-black bg-indigo-400 px-4 py-1.5 rounded-bl-lg">
                 MOST POPULAR
               </div>
             )}
-            <div className="relative z-10 flex flex-col h-full gap-2">
+            <div className="relative z-10 flex flex-col h-full">
               <h3 className="text-2xl font-semibold text-white">{plan.name}</h3>
               <p className="text-gray-400 mt-2">{plan.description}</p>
 
@@ -216,18 +218,18 @@ const AuroraPricing = () => {
               <ul className="mt-8 space-y-4">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-center text-gray-300">
-                    <CheckCircle className="h-5 w-5 text-purple-400 mr-3 flex-shrink-0" />
+                    <CheckCircle className="h-5 w-5 text-indigo-400 mr-3" />
                     {feature}
                   </li>
                 ))}
               </ul>
 
               <button
-                onClick={plan.action}
+                onClick={plan.onClick}
                 className={cn(
-                  "w-full mt-8 text-lg font-semibold rounded-lg py-3 transition-colors cursor-pointer border-none",
+                  "w-full mt-auto pt-4 text-lg font-semibold rounded-lg py-3 transition-colors cursor-pointer border-none",
                   plan.isFeatured
-                    ? "bg-purple-600 text-white hover:bg-purple-700"
+                    ? "bg-indigo-500 text-white hover:bg-indigo-600"
                     : "bg-gray-700 text-gray-200 hover:bg-gray-600"
                 )}
               >
