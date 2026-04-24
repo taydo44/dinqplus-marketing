@@ -1,246 +1,293 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, Zap } from "lucide-react";
+import React from "react";
 
-const cn = (...classes: (string | boolean | undefined)[]) =>
-  classes.filter(Boolean).join(" ");
+const SparklesIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-emerald-400"
+  >
+    <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" />
+    <path d="M20 2v4" />
+    <path d="M22 4h-4" />
+    <circle cx="4" cy="20" r="2" />
+  </svg>
+);
 
-const AuroraPricing = () => {
-  const [billingCycle, setBillingCycle] = useState("monthly");
+const BriefcaseIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-blue-400"
+  >
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+  </svg>
+);
 
-  const plans = [
-    {
-      name: "Starter",
-      price: { monthly: 29, yearly: 23 },
-      description: "Perfect for salons, auto shops and property managers.",
-      features: [
-        "DinqBook, DinqShop or DinqProp",
-        "Unlimited clients & records",
-        "Invoicing & payments",
-        "Analytics dashboard",
-        "7-day free trial",
-      ],
-      isFeatured: false,
-      buttonText: "Start free trial",
-      onClick: () =>
-        window.open("https://app.dinqdigital.com/signup", "_blank"),
-    },
-    {
-      name: "Pro",
-      price: { monthly: 49, yearly: 39 },
-      description: "For agencies and care businesses needing more power.",
-      features: [
-        "DinqAgency or DinqCare",
-        "Multi-role team access",
-        "Advanced workflows",
-        "Priority support",
-        "7-day free trial",
-      ],
-      isFeatured: true,
-      buttonText: "Start free trial",
-      onClick: () =>
-        window.open("https://app.dinqdigital.com/signup", "_blank"),
-    },
-    {
-      name: "Custom",
-      price: { monthly: 0, yearly: 0 },
-      description: "For large organizations with custom needs.",
-      features: [
-        "DinqFactory + all verticals",
-        "Custom vertical development",
-        "Dedicated account manager",
-        "Custom integrations & SLA",
-      ],
-      isFeatured: false,
-      buttonText: "Contact us",
-      onClick: () => {
-        window.location.href = "mailto:dinqdigital@gmail.com";
-      },
-    },
-  ];
+const BuildingIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="text-purple-400"
+  >
+    <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+    <path d="M9 9h6v6H9z" />
+    <path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3" />
+  </svg>
+);
 
-  const fadeUpVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.15 + 0.3,
-        duration: 0.6,
-        ease: "easeInOut" as const,
-      },
-    }),
+const CheckIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="12"
+    height="12"
+    viewBox="0 0 24 24"
+    fill="hsl(240, 15%, 9%)"
+    stroke="hsl(240, 15%, 9%)"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M20 6 9 17l-5-5" />
+  </svg>
+);
+
+function PricingCard({
+  planName,
+  description,
+  price,
+  priceDescription,
+  features,
+  icon,
+  iconBgClass,
+  isPopular,
+  buttonText,
+  onClick,
+}: {
+  planName: string;
+  description: string;
+  price: string;
+  priceDescription: string;
+  features: string[];
+  icon: React.ReactNode;
+  iconBgClass: string;
+  isPopular: boolean;
+  buttonText: string;
+  onClick: () => void;
+}) {
+  const cardStyle = {
+    width: "19rem",
+    backgroundColor: "hsla(240, 15%, 9%, 1)",
+    backgroundImage:
+      "radial-gradient(at 88% 40%, hsla(240, 15%, 9%, 1) 0px, transparent 85%)," +
+      " radial-gradient(at 49% 30%, hsla(240, 15%, 9%, 1) 0px, transparent 85%)," +
+      " radial-gradient(at 14% 26%, hsla(240, 15%, 9%, 1) 0px, transparent 85%)," +
+      " radial-gradient(at 0% 64%, hsla(263, 93%, 56%, 1) 0px, transparent 85%)," +
+      " radial-gradient(at 41% 94%, hsla(284, 100%, 84%, 1) 0px, transparent 85%)," +
+      " radial-gradient(at 100% 99%, hsla(306, 100%, 57%, 1) 0px, transparent 85%)",
+    boxShadow: "0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset",
+  };
+
+  const borderContainerStyle: React.CSSProperties = {
+    overflow: "hidden",
+    pointerEvents: "none",
+    position: "absolute",
+    zIndex: -10,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: "calc(100% + 2px)",
+    height: "calc(100% + 2px)",
+    backgroundImage:
+      "linear-gradient(0deg, hsl(0, 0%, 100%) -50%, hsl(0, 0%, 40%) 100%)",
+    borderRadius: "1rem",
+  };
+
+  const rotatingBorderStyle: React.CSSProperties = {
+    pointerEvents: "none",
+    position: "fixed",
+    zIndex: 200,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%) rotate(0deg)",
+    transformOrigin: "left",
+    width: "200%",
+    height: "10rem",
+    backgroundImage:
+      "linear-gradient(0deg, hsla(0, 0%, 100%, 0) 0%, hsl(277, 95%, 60%) 40%, hsl(277, 95%, 60%) 60%, hsla(0, 0%, 40%, 0) 100%)",
+    animation: "rotate 8s linear infinite",
   };
 
   return (
-    <div className="relative w-full min-h-screen bg-gray-950 flex flex-col items-center justify-center p-8 overflow-hidden">
-      <div className="absolute inset-0 z-0 opacity-20">
-        <div className="aurora-bg">
-          <div className="aurora-shape-1"></div>
-          <div className="aurora-shape-2"></div>
+    <div
+      className="relative hover:bg-white/[0.04] transition-all duration-300 group rounded-2xl p-6 flex flex-col"
+      style={cardStyle}
+    >
+      <style>{`@keyframes rotate { to { transform: translate(-50%, -50%) rotate(360deg); } }`}</style>
+
+      {isPopular && (
+        <div className="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2">
+          <span className="bg-purple-600 text-white text-xs font-semibold px-4 py-1 rounded-full">
+            MOST POPULAR
+          </span>
         </div>
-      </div>
-      <style>{`
-                .aurora-bg { position: absolute; inset: 0; filter: blur(100px); }
-                .aurora-shape-1, .aurora-shape-2 { position: absolute; border-radius: 50%; }
-                .aurora-shape-1 { width: 600px; height: 600px; background-color: rgba(107, 33, 168, 0.6); top: 10%; left: 10%; animation: moveAurora1 20s infinite alternate ease-in-out; }
-                .aurora-shape-2 { width: 500px; height: 500px; background-color: rgba(79, 70, 229, 0.5); bottom: 10%; right: 10%; animation: moveAurora2 25s infinite alternate ease-in-out; }
-                @keyframes moveAurora1 { from { transform: translate(0, 0) rotate(0deg); } to { transform: translate(100px, 50px) rotate(180deg); } }
-                @keyframes moveAurora2 { from { transform: translate(0, 0) rotate(0deg); } to { transform: translate(-100px, -50px) rotate(-180deg); } }
-                .card-aurora, .card-aurora-featured { background-size: 300% 300%; animation: gradient-animation 10s ease infinite; filter: blur(50px); }
-                .card-aurora { background-image: linear-gradient(45deg, #6B21A8, #4F46E5); }
-                .card-aurora-featured { background-image: linear-gradient(45deg, #6B21A8, #4F46E5); }
-                div:hover > .card-aurora, div:hover > .card-aurora-featured { opacity: 0.3; }
-            `}</style>
+      )}
 
-      <div className="relative z-10 flex flex-col items-center text-center">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeInOut" }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-6"
-        >
-          <Zap className="h-4 w-4 text-indigo-300" />
-          <span className="text-sm font-medium text-gray-200">
-            Flexible & Transparent Pricing
-          </span>
-        </motion.div>
-        <motion.h1
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut" }}
-          className="text-5xl md:text-6xl font-bold tracking-tighter mb-6 text-white"
-        >
-          Find the Perfect Plan
-        </motion.h1>
+      <div className="flex-grow">
+        <div style={borderContainerStyle}>
+          <div style={rotatingBorderStyle}></div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8, ease: "easeInOut" }}
-          className="flex items-center justify-center space-x-4 mb-12"
-        >
-          <span
-            className={cn(
-              "text-lg",
-              billingCycle === "monthly" ? "text-white" : "text-gray-500"
-            )}
-          >
-            Monthly
-          </span>
-          <div
-            className="w-14 h-8 flex items-center bg-gray-700 rounded-full p-1 cursor-pointer"
-            onClick={() =>
-              setBillingCycle(billingCycle === "monthly" ? "yearly" : "monthly")
-            }
-          >
-            <motion.div
-              className="w-6 h-6 bg-indigo-500 rounded-full"
-              layout
-              transition={{ type: "spring", stiffness: 700, damping: 30 }}
-              style={{ marginLeft: billingCycle === "yearly" ? "auto" : "0" }}
-            />
-          </div>
-          <span
-            className={cn(
-              "text-lg",
-              billingCycle === "yearly" ? "text-white" : "text-gray-500"
-            )}
-          >
-            Yearly
-          </span>
-          <span className="text-sm text-indigo-400 font-semibold">
-            (Save 20%)
-          </span>
-        </motion.div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl w-full relative z-10">
-        {plans.map((plan, index) => (
-          <motion.div
-            key={plan.name}
-            custom={index}
-            variants={fadeUpVariants}
-            initial="hidden"
-            animate="visible"
-            whileHover={{ y: -10, scale: 1.02 }}
-            className={cn(
-              "relative p-8 rounded-2xl border border-gray-700/50 overflow-hidden",
-              plan.isFeatured
-                ? "bg-gray-900/80"
-                : "bg-gray-950/50 backdrop-blur-sm"
-            )}
-          >
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
             <div
-              className={cn(
-                "absolute inset-0 opacity-0 transition-opacity duration-500",
-                plan.isFeatured ? "card-aurora-featured" : "card-aurora"
-              )}
-            ></div>
-            {plan.isFeatured && (
-              <div className="absolute top-0 right-0 text-xs font-bold text-black bg-indigo-400 px-4 py-1.5 rounded-bl-lg">
-                MOST POPULAR
-              </div>
-            )}
-            <div className="relative z-10 flex flex-col h-full">
-              <h3 className="text-2xl font-semibold text-white">{plan.name}</h3>
-              <p className="text-gray-400 mt-2">{plan.description}</p>
-
-              <div className="flex items-baseline mt-8">
-                {plan.name === "Custom" ? (
-                  <span className="text-5xl font-bold text-white tracking-tight">
-                    Let's talk
-                  </span>
-                ) : (
-                  <>
-                    <span className="text-5xl font-bold text-white tracking-tight">
-                      <AnimatePresence mode="wait">
-                        <motion.span
-                          key={billingCycle}
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          exit={{ opacity: 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          ${plan.price[billingCycle as "monthly" | "yearly"]}
-                        </motion.span>
-                      </AnimatePresence>
-                    </span>
-                    <span className="text-gray-400 ml-2">
-                      /{billingCycle === "monthly" ? "mo" : "yr"}
-                    </span>
-                  </>
-                )}
-              </div>
-
-              <ul className="mt-8 space-y-4">
-                {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-center text-gray-300">
-                    <CheckCircle className="h-5 w-5 text-indigo-400 mr-3" />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-
-              <button
-                onClick={plan.onClick}
-                className={cn(
-                  "w-full mt-auto pt-4 text-lg font-semibold rounded-lg py-3 transition-colors cursor-pointer border-none",
-                  plan.isFeatured
-                    ? "bg-indigo-500 text-white hover:bg-indigo-600"
-                    : "bg-gray-700 text-gray-200 hover:bg-gray-600"
-                )}
-              >
-                {plan.buttonText}
-              </button>
+              className={`h-10 w-10 rounded-xl border border-white/20 bg-gradient-to-br ${iconBgClass} flex items-center justify-center`}
+            >
+              {icon}
             </div>
-          </motion.div>
-        ))}
+            <div>
+              <h3 className="text-xl font-medium tracking-tight text-white">
+                {planName}
+              </h3>
+              <p className="text-xs text-neutral-500">{description}</p>
+            </div>
+          </div>
+          <div className="h-5 w-5 rounded-full border-2 border-white/30"></div>
+        </div>
+
+        <div className="mb-6">
+          <div className="flex items-baseline gap-2">
+            <span className="text-4xl font-semibold tracking-tight text-white">
+              {price}
+            </span>
+            <span className="text-sm text-neutral-400">{priceDescription}</span>
+          </div>
+          <p className="text-xs text-neutral-500 mt-1">
+            No credit card required
+          </p>
+        </div>
+
+        <ul className="space-y-3 text-sm text-neutral-300">
+          {features.map((feature, idx) => (
+            <li key={idx} className="flex items-start gap-3">
+              <div className="flex items-center justify-center w-4 h-4 bg-violet-500 rounded-full">
+                <CheckIcon />
+              </div>
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mt-6">
+        <button
+          onClick={onClick}
+          className="w-full h-12 bg-white rounded-lg text-neutral-900 font-bold hover:bg-neutral-200 transition-colors cursor-pointer border-none"
+        >
+          {buttonText}
+        </button>
       </div>
     </div>
   );
-};
+}
 
-export default AuroraPricing;
+export default function AuroraPricing() {
+  const starterPlan = {
+    planName: "Starter",
+    description: "Perfect for salons, auto shops and property managers",
+    price: "$29",
+    priceDescription: "/ month",
+    icon: <SparklesIcon />,
+    iconBgClass: "from-emerald-500/20 to-teal-500/20",
+    features: [
+      "DinqBook, DinqShop or DinqProp",
+      "Unlimited clients & records",
+      "Invoicing & payments",
+      "Analytics dashboard",
+      "7-day free trial",
+    ],
+    buttonText: "Start free trial",
+    isPopular: false,
+    onClick: () => window.open("https://app.dinqdigital.com/signup", "_blank"),
+  };
+
+  const proPlan = {
+    planName: "Pro",
+    description: "For agencies and care businesses needing more power",
+    price: "$49",
+    priceDescription: "/ month",
+    icon: <BriefcaseIcon />,
+    iconBgClass: "from-blue-500/20 to-cyan-500/20",
+    features: [
+      "DinqAgency or DinqCare",
+      "Multi-role team access",
+      "Advanced workflows",
+      "Priority support",
+      "7-day free trial",
+    ],
+    buttonText: "Start free trial",
+    isPopular: true,
+    onClick: () => window.open("https://app.dinqdigital.com/signup", "_blank"),
+  };
+
+  const customPlan = {
+    planName: "Custom",
+    description: "For large organizations with custom needs",
+    price: "Let's talk",
+    priceDescription: "",
+    icon: <BuildingIcon />,
+    iconBgClass: "from-purple-500/20 to-indigo-500/20",
+    features: [
+      "DinqFactory + all verticals",
+      "Custom vertical development",
+      "Dedicated account manager",
+      "Custom integrations & SLA",
+    ],
+    buttonText: "Contact us",
+    isPopular: false,
+    onClick: () => {
+      window.location.href = "mailto:dinqdigital@gmail.com";
+    },
+  };
+
+  return (
+    <div className="min-h-screen w-full bg-neutral-950 flex flex-col items-center justify-center p-8">
+      <div className="text-center mb-16">
+        <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tight">
+          Find the plan that's right for you
+        </h1>
+        <p className="mt-4 text-lg text-neutral-400">
+          Start for free and scale up as you grow. No credit card required.
+        </p>
+      </div>
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-8">
+        <PricingCard {...starterPlan} />
+        <PricingCard {...proPlan} />
+        <PricingCard {...customPlan} />
+      </div>
+    </div>
+  );
+}
