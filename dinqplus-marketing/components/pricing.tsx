@@ -3,8 +3,8 @@
 import React, { useRef, useEffect, useState } from "react"
 import { RippleButton } from "@/components/ui/ripple-button"
 
-const CheckIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+const CheckIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className={className}>
     <path d="M20 6 9 17l-5-5" />
   </svg>
 )
@@ -23,30 +23,31 @@ const ShaderCanvas = () => {
       precision highp float;
       uniform float iTime;
       uniform vec2 iResolution;
+      uniform vec3 uBackgroundColor;
       mat2 rotate2d(float angle){ float c=cos(angle),s=sin(angle); return mat2(c,-s,s,c); }
       float variation(vec2 v1,vec2 v2,float strength,float speed){ return sin(dot(normalize(v1),normalize(v2))*strength+iTime*speed)/100.0; }
-      vec3 paintInfinity(vec2 uv, vec2 center, float scale, float width) {
-        vec2 p = (uv - center) * vec2(2.2, 1.0) / scale;
-        float a = 0.5;
-        float lemniscate = (p.x*p.x + p.y*p.y)*(p.x*p.x + p.y*p.y) - a*a*(p.x*p.x - p.y*p.y);
-        float dist = abs(lemniscate) / (4.0 * a * a * length(p) + 0.001);
-        float line = smoothstep(width, 0.0, dist);
-        return vec3(line);
+      vec3 paintCircle(vec2 uv,vec2 center,float rad,float width){
+        vec2 diff=center-uv;
+        float len=length(diff);
+        len+=variation(diff,vec2(0.,1.),5.,2.);
+        len-=variation(diff,vec2(1.,0.),5.,2.);
+        float circle=smoothstep(rad-width,rad,len)-smoothstep(rad,rad+width,len);
+        return vec3(circle);
       }
       void main(){
-        vec2 uv = gl_FragCoord.xy/iResolution.xy;
-        uv.x *= iResolution.x/iResolution.y;
-        float aspectCenter = iResolution.x/iResolution.y * 0.5;
-        vec2 center = vec2(aspectCenter, 0.5);
-        float mask = 0.0;
-        mask += paintInfinity(uv, center, 0.32, 0.018).r;
-        mask += paintInfinity(uv, center, 0.30, 0.008).r;
-        mask += paintInfinity(uv, center, 0.34, 0.004).r;
-        vec2 v = rotate2d(iTime) * uv;
-        vec3 fg = vec3(v.x, v.y, 0.7 - v.y * v.x);
-        vec3 bg = vec3(1.0);
-        vec3 color = mix(bg, fg, mask);
-        gl_FragColor = vec4(color, 1.0);
+        vec2 uv=gl_FragCoord.xy/iResolution.xy;
+        uv.x*=1.5; uv.x-=0.25;
+        float mask=0.0;
+        float radius=.35;
+        vec2 center=vec2(.5);
+        mask+=paintCircle(uv,center,radius,.035).r;
+        mask+=paintCircle(uv,center,radius-.018,.01).r;
+        mask+=paintCircle(uv,center,radius+.018,.005).r;
+        vec2 v=rotate2d(iTime)*uv;
+        vec3 fg=vec3(v.x*0.4+0.3,v.y*0.2+0.1,0.8-v.y*v.x*0.5);
+        vec3 color=mix(uBackgroundColor,fg,mask);
+        color=mix(color,vec3(0.8,0.7,1.0),paintCircle(uv,center,radius,.003).r);
+        gl_FragColor=vec4(color,1.);
       }
     `
 
@@ -72,6 +73,8 @@ const ShaderCanvas = () => {
 
     const iTime = gl.getUniformLocation(program, "iTime")
     const iRes = gl.getUniformLocation(program, "iResolution")
+    const iBg = gl.getUniformLocation(program, "uBackgroundColor")
+    gl.uniform3fv(iBg, new Float32Array([1.0, 1.0, 1.0]))
 
     let raf: number
     const render = (t: number) => {
@@ -97,17 +100,18 @@ interface Plan {
   features: string[]
   buttonText: string
   isPopular?: boolean
+  buttonVariant?: "primary" | "secondary"
   onClick?: () => void
 }
 
-const PricingCard = ({ planName, description, price, features, buttonText, isPopular, onClick }: Plan) => (
+const PricingCard = ({ planName, description, price, features, buttonText, isPopular, buttonVariant = "primary", onClick }: Plan) => (
   <div className={`
     backdrop-blur-[14px] bg-gradient-to-br rounded-2xl shadow-xl flex-1 max-w-xs px-7 py-8 flex flex-col transition-all duration-300
-    from-black/5 to-black/0 border border-black/10
-    ${isPopular ? "scale-105 relative ring-2 ring-cyan-400/20 shadow-2xl" : ""}
+    from-white/60 to-white/40 border border-white/30
+    ${isPopular ? "scale-105 relative ring-2 ring-purple-400/30 shadow-2xl from-white/80 to-white/60" : ""}
   `}>
     {isPopular && (
-      <div className="absolute -top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full bg-cyan-400 text-black">
+      <div className="absolute -top-4 right-4 px-3 py-1 text-xs font-semibold rounded-full bg-purple-600 text-white">
         Most Popular
       </div>
     )}
@@ -119,20 +123,21 @@ const PricingCard = ({ planName, description, price, features, buttonText, isPop
       <span className="text-5xl font-extralight text-gray-900">{price}</span>
       {price !== "Custom" && <span className="text-sm text-gray-500">/mo</span>}
     </div>
-    <div className="w-full mb-5 h-px bg-gradient-to-r from-transparent via-black/10 to-transparent" />
+    <div className="w-full mb-5 h-px bg-gradient-to-r from-transparent via-purple-300/50 to-transparent" />
     <ul className="flex flex-col gap-2 text-sm text-gray-700 mb-6">
       {features.map((f, i) => (
         <li key={i} className="flex items-center gap-2">
-          <CheckIcon /> {f}
+          <CheckIcon className="text-purple-500 w-4 h-4 flex-shrink-0" /> {f}
         </li>
       ))}
     </ul>
     <RippleButton
       onClick={onClick}
+      rippleColor="rgba(107,33,168,0.3)"
       className={`mt-auto w-full py-2.5 rounded-xl font-semibold text-sm transition ${
-        isPopular
-          ? "bg-cyan-400 hover:bg-cyan-300 text-black"
-          : "bg-black/10 hover:bg-black/20 text-gray-900 border border-black/20"
+        buttonVariant === "primary"
+          ? "bg-purple-600 hover:bg-purple-700 text-white"
+          : "bg-black/5 hover:bg-black/10 text-gray-800 border border-black/10"
       }`}
     >
       {buttonText}
@@ -149,6 +154,7 @@ export default function Pricing() {
       features: ["DinqBook, DinqShop or DinqProp", "Unlimited clients & records", "Invoicing & payments", "Analytics dashboard", "7-day free trial"],
       buttonText: "Start free trial",
       isPopular: false,
+      buttonVariant: "secondary",
       onClick: () => window.open("https://app.dinqdigital.com/signup", "_blank"),
     },
     {
@@ -158,6 +164,7 @@ export default function Pricing() {
       features: ["DinqAgency or DinqCare", "Multi-role team access", "Advanced workflows", "Priority support", "7-day free trial"],
       buttonText: "Start free trial",
       isPopular: true,
+      buttonVariant: "primary",
       onClick: () => window.open("https://app.dinqdigital.com/signup", "_blank"),
     },
     {
@@ -167,23 +174,24 @@ export default function Pricing() {
       features: ["DinqFactory + all verticals", "Custom vertical development", "Dedicated account manager", "Custom integrations & SLA"],
       buttonText: "Contact us",
       isPopular: false,
+      buttonVariant: "secondary",
       onClick: () => { window.location.href = "mailto:dinqdigital@gmail.com" },
     },
   ]
 
   return (
-    <div className="bg-white text-gray-900 min-h-screen w-full overflow-x-hidden">
+    <div className="bg-white min-h-screen w-full overflow-x-hidden">
       <ShaderCanvas />
       <main className="relative w-full min-h-screen flex flex-col items-center justify-center px-4 py-8 z-10">
         <div className="w-full max-w-5xl mx-auto text-center mb-14">
-          <h1 className="text-5xl md:text-7xl font-extralight leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-cyan-500 to-blue-600">
+          <h1 className="text-5xl md:text-7xl font-extralight leading-tight tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-purple-600 to-indigo-600">
             Find the plan that's right for you
           </h1>
           <p className="mt-3 text-lg md:text-xl text-gray-500 max-w-2xl mx-auto">
             Start free for 7 days. No credit card required.
           </p>
         </div>
-        <div className="flex flex-col md:flex-row gap-8 md:gap-6 justify-center items-center w-full max-w-4xl">
+        <div className="flex flex-col md:flex-row gap-8 md:gap-6 justify-center items-stretch w-full max-w-4xl">
           {plans.map((plan) => <PricingCard key={plan.planName} {...plan} />)}
         </div>
       </main>

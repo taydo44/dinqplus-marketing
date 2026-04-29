@@ -1,13 +1,21 @@
 "use client"
 
-import React, { useRef } from "react"
+import React, { useRef, useState } from "react"
+
+interface Ripple {
+  x: number
+  y: number
+  id: number
+}
 
 interface RippleButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode
+  rippleColor?: string
 }
 
-export function RippleButton({ children, className, onClick, ...props }: RippleButtonProps) {
+export function RippleButton({ children, className, onClick, rippleColor = "rgba(255,255,255,0.35)", ...props }: RippleButtonProps) {
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const [ripples, setRipples] = useState<Ripple[]>([])
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const button = buttonRef.current
@@ -16,27 +24,10 @@ export function RippleButton({ children, className, onClick, ...props }: RippleB
     const rect = button.getBoundingClientRect()
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
+    const id = Date.now()
 
-    const ripple = document.createElement("span")
-    ripple.style.cssText = `
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.4);
-      transform: scale(0);
-      animation: ripple-effect 0.6s linear;
-      pointer-events: none;
-      width: 100px;
-      height: 100px;
-      left: ${x - 50}px;
-      top: ${y - 50}px;
-    `
-
-    const style = document.createElement("style")
-    style.textContent = `@keyframes ripple-effect { to { transform: scale(4); opacity: 0; } }`
-    document.head.appendChild(style)
-
-    button.appendChild(ripple)
-    setTimeout(() => ripple.remove(), 600)
+    setRipples((prev) => [...prev, { x, y, id }])
+    setTimeout(() => setRipples((prev) => prev.filter((r) => r.id !== id)), 700)
 
     onClick?.(e)
   }
@@ -44,11 +35,34 @@ export function RippleButton({ children, className, onClick, ...props }: RippleB
   return (
     <button
       ref={buttonRef}
-      className={`relative overflow-hidden ${className}`}
+      className={`relative overflow-hidden select-none ${className}`}
       onClick={handleClick}
       {...props}
     >
-      {children}
+      {ripples.map((ripple) => (
+        <span
+          key={ripple.id}
+          style={{
+            position: "absolute",
+            left: ripple.x,
+            top: ripple.y,
+            width: 0,
+            height: 0,
+            borderRadius: "50%",
+            background: rippleColor,
+            transform: "translate(-50%, -50%)",
+            animation: "ripple-expand 0.7s ease-out forwards",
+            pointerEvents: "none",
+          }}
+        />
+      ))}
+      <style>{`
+        @keyframes ripple-expand {
+          from { width: 0; height: 0; opacity: 1; }
+          to { width: 500px; height: 500px; opacity: 0; }
+        }
+      `}</style>
+      <span className="relative z-10">{children}</span>
     </button>
   )
 }
