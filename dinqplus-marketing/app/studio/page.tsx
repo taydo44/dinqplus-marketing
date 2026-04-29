@@ -1,8 +1,9 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { Suspense, useEffect, useRef, useState } from "react"
+import { Suspense, useEffect, useRef } from "react"
 import { Navbar } from "@/components/navbar"
+import { useFrame, useThree } from "@react-three/fiber"
 
 const Canvas = dynamic(() => import("@react-three/fiber").then((m) => m.Canvas), { ssr: false })
 const ParticleSphere = dynamic(
@@ -21,6 +22,28 @@ const CLIENT_IMAGES = [
   "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&q=80",
 ]
 
+function CameraController() {
+  const { camera } = useThree()
+  const scrollRef = useRef(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      scrollRef.current = window.scrollY
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  useFrame(() => {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+    const progress = maxScroll > 0 ? scrollRef.current / maxScroll : 0
+    const targetZ = 20 - progress * 14
+    camera.position.z += (targetZ - camera.position.z) * 0.05
+  })
+
+  return null
+}
+
 function Scene() {
   return (
     <Canvas
@@ -29,6 +52,7 @@ function Scene() {
       gl={{ antialias: true, alpha: true }}
     >
       <ambientLight intensity={1} />
+      <CameraController />
       <Suspense fallback={null}>
         <ParticleSphere images={CLIENT_IMAGES} />
       </Suspense>
@@ -39,9 +63,7 @@ function Scene() {
 export default function StudioPage() {
   return (
     <div style={{ background: "#000", minHeight: "300vh" }}>
-      <Suspense fallback={null}>
-        <Scene />
-      </Suspense>
+      <Scene />
 
       <div style={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 50 }}>
         <Navbar />
