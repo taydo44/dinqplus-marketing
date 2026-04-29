@@ -51,7 +51,8 @@ function CameraController() {
     const progress = maxScroll > 0 ? scrollRef.current / maxScroll : 0
     const targetZ = 20 - progress * 14
     camera.position.z += (targetZ - camera.position.z) * 0.05
-    camera.position.y = -5
+    camera.rotation.x = 0.3
+    camera.position.y = -8
   })
 
   return null
@@ -60,7 +61,7 @@ function CameraController() {
 function Scene() {
   return (
     <Canvas
-      camera={{ position: [0, -5, 20], fov: 75 }}
+      camera={{ position: [0, -8, 20], fov: 75 }}
       style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0 }}
       gl={{ antialias: true, alpha: true }}
     >

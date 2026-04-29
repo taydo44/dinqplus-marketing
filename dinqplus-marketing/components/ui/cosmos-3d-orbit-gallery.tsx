@@ -68,7 +68,7 @@ export function ParticleSphere({ images }: ParticleSphereProps) {
   useFrame(() => {
     if (groupRef.current) {
       groupRef.current.rotation.y += ROTATION_SPEED_Y
-      groupRef.current.rotation.x += ROTATION_SPEED_X
+      groupRef.current.rotation.x -= ROTATION_SPEED_X
     }
   })
 
