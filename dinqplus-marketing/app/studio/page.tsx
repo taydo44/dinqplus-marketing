@@ -1,15 +1,21 @@
-"use client"
+"use client";
 
-import dynamic from "next/dynamic"
-import { Suspense, useEffect, useRef } from "react"
-import { Navbar } from "@/components/navbar"
-import { useFrame, useThree } from "@react-three/fiber"
+import dynamic from "next/dynamic";
+import { Suspense, useEffect, useRef } from "react";
+import { Navbar } from "@/components/navbar";
+import { useFrame, useThree } from "@react-three/fiber";
 
-const Canvas = dynamic(() => import("@react-three/fiber").then((m) => m.Canvas), { ssr: false })
-const ParticleSphere = dynamic(
-  () => import("@/components/ui/cosmos-3d-orbit-gallery").then((m) => m.ParticleSphere),
+const Canvas = dynamic(
+  () => import("@react-three/fiber").then((m) => m.Canvas),
   { ssr: false }
-)
+);
+const ParticleSphere = dynamic(
+  () =>
+    import("@/components/ui/cosmos-3d-orbit-gallery").then(
+      (m) => m.ParticleSphere
+    ),
+  { ssr: false }
+);
 
 const CLIENT_IMAGES = [
   "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400&q=80",
@@ -32,37 +38,45 @@ const CLIENT_IMAGES = [
   "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=80",
   "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=80",
   "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&q=80",
-]
+];
 
 function CameraController() {
-  const { camera } = useThree()
-  const scrollRef = useRef(0)
+  const { camera } = useThree();
+  const scrollRef = useRef(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      scrollRef.current = window.scrollY
-    }
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+      scrollRef.current = window.scrollY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useFrame(() => {
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-    const progress = maxScroll > 0 ? scrollRef.current / maxScroll : 0
-    const targetZ = 20 - progress * 14
-    camera.position.z += (targetZ - camera.position.z) * 0.05
-    camera.rotation.x = 0.3
-    camera.position.y = -8
-  })
+    const maxScroll =
+      document.documentElement.scrollHeight - window.innerHeight;
+    const progress = maxScroll > 0 ? scrollRef.current / maxScroll : 0;
+    const targetZ = 20 - progress * 14;
+    camera.position.z += (targetZ - camera.position.z) * 0.05;
+    camera.rotation.x = 0.3;
+    camera.position.y = 0.0;
+  });
 
-  return null
+  return null;
 }
 
 function Scene() {
   return (
     <Canvas
       camera={{ position: [0, -8, 20], fov: 75 }}
-      style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0 }}
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: 0,
+      }}
       gl={{ antialias: true, alpha: true }}
     >
       <ambientLight intensity={1} />
@@ -71,7 +85,7 @@ function Scene() {
         <ParticleSphere images={CLIENT_IMAGES} />
       </Suspense>
     </Canvas>
-  )
+  );
 }
 
 export default function StudioPage() {
@@ -79,7 +93,15 @@ export default function StudioPage() {
     <div style={{ background: "#000", minHeight: "300vh" }}>
       <Scene />
 
-      <div style={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 50 }}>
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          zIndex: 50,
+        }}
+      >
         <Navbar />
       </div>
 
@@ -113,5 +135,5 @@ export default function StudioPage() {
         </h1>
       </div>
     </div>
-  )
+  );
 }
