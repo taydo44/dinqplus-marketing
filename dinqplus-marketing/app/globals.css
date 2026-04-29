@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -34,4 +36,12 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(107, 33, 168, 0.7);
+}
+
+:root {
+  --font-instrument-serif: 'Instrument Serif', serif;
+}
+
+@theme inline {
+  --font-instrument-serif: var(----font-instrument-serif);
 }
