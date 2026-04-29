@@ -58,7 +58,7 @@ function CameraController() {
     const progress = maxScroll > 0 ? scrollRef.current / maxScroll : 0;
     const targetZ = 20 - progress * 14;
     camera.position.z += (targetZ - camera.position.z) * 0.05;
-    camera.rotation.x = 0.3;
+    camera.rotation.x = 0.05;
     camera.position.y = 0.0;
   });
 
