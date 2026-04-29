@@ -239,7 +239,7 @@ export default function OrbitalTimeline() {
                   : isRelated ? "bg-white/50 text-black border-white animate-pulse"
                   : "bg-black text-white border-white/40"
                 }`}>
-                  <Icon size={16 as never} />
+                  { React.createElement(Icon as any, { size: 16 }) }
                 </div>
 
                 {/* Label */}
