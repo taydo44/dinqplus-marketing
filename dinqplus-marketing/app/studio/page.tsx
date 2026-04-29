@@ -20,6 +20,18 @@ const CLIENT_IMAGES = [
   "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&q=80",
   "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=400&q=80",
   "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=400&q=80",
+  "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&q=80",
+  "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=400&q=80",
+  "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=400&q=80",
+  "https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=400&q=80",
+  "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&q=80",
+  "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=400&q=80",
+  "https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&q=80",
+  "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&q=80",
+  "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&q=80",
+  "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=400&q=80",
+  "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&q=80",
+  "https://images.unsplash.com/photo-1432888622747-4eb9a8efeb07?w=400&q=80",
 ]
 
 function CameraController() {
@@ -39,6 +51,7 @@ function CameraController() {
     const progress = maxScroll > 0 ? scrollRef.current / maxScroll : 0
     const targetZ = 20 - progress * 14
     camera.position.z += (targetZ - camera.position.z) * 0.05
+    camera.position.y = -2
   })
 
   return null
@@ -47,7 +60,7 @@ function CameraController() {
 function Scene() {
   return (
     <Canvas
-      camera={{ position: [0, 0, 20], fov: 75 }}
+      camera={{ position: [0, -2, 20], fov: 75 }}
       style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0 }}
       gl={{ antialias: true, alpha: true }}
     >
@@ -72,7 +85,7 @@ export default function StudioPage() {
       <div
         style={{
           position: "fixed",
-          top: "50%",
+          top: "35%",
           left: "50%",
           transform: "translate(-50%, -50%)",
           zIndex: 10,
