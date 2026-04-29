@@ -1,5 +1,4 @@
 "use client"
-
 import { useRef, useMemo } from "react"
 import { useFrame } from "@react-three/fiber"
 import { useTexture } from "@react-three/drei"
@@ -15,15 +14,16 @@ export function ParticleSphere({ images }: ParticleSphereProps) {
   const PARTICLE_SIZE_MAX = 0.01
   const SPHERE_RADIUS = 9
   const POSITION_RANDOMNESS = 4
+  const ROTATION_SPEED_X = 0.0
   const ROTATION_SPEED_Y = 0.0005
-  const IMAGE_SIZE = 1.5
+  const PARTICLE_OPACITY = 1
   const IMAGE_COUNT = images.length
-
+  const IMAGE_SIZE = 1.5
   const groupRef = useRef<THREE.Group>(null)
   const textures = useTexture(images)
 
   const particles = useMemo(() => {
-    const list = []
+    const list: { position: [number, number, number]; scale: number; color: THREE.Color }[] = []
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       const phi = Math.acos(-1 + (2 * i) / PARTICLE_COUNT)
       const theta = Math.sqrt(PARTICLE_COUNT * Math.PI) * phi
@@ -33,7 +33,7 @@ export function ParticleSphere({ images }: ParticleSphereProps) {
           r * Math.cos(theta) * Math.sin(phi),
           r * Math.cos(phi),
           r * Math.sin(theta) * Math.sin(phi),
-        ] as [number, number, number],
+        ],
         scale: Math.random() * (PARTICLE_SIZE_MAX - PARTICLE_SIZE_MIN) + PARTICLE_SIZE_MIN,
         color: new THREE.Color().setHSL(
           0.75 + Math.random() * 0.1,
@@ -46,18 +46,19 @@ export function ParticleSphere({ images }: ParticleSphereProps) {
   }, [])
 
   const orbitingImages = useMemo(() => {
-    const list = []
+    const list: { position: [number, number, number]; rotation: [number, number, number]; textureIndex: number }[] = []
     for (let i = 0; i < IMAGE_COUNT; i++) {
       const angle = (i / IMAGE_COUNT) * Math.PI * 2
       const x = SPHERE_RADIUS * Math.cos(angle)
       const z = SPHERE_RADIUS * Math.sin(angle)
       const position = new THREE.Vector3(x, 0, z)
+      const outwardDirection = position.clone().normalize()
       const matrix = new THREE.Matrix4()
-      matrix.lookAt(position, position.clone().add(position.clone().normalize()), new THREE.Vector3(0, 1, 0))
+      matrix.lookAt(position, position.clone().add(outwardDirection), new THREE.Vector3(0, 1, 0))
       const euler = new THREE.Euler().setFromRotationMatrix(matrix)
       list.push({
-        position: [x, 0, z] as [number, number, number],
-        rotation: [euler.x, euler.y, euler.z] as [number, number, number],
+        position: [x, 0, z],
+        rotation: [euler.x, euler.y, euler.z],
         textureIndex: i % textures.length,
       })
     }
@@ -67,6 +68,7 @@ export function ParticleSphere({ images }: ParticleSphereProps) {
   useFrame(() => {
     if (groupRef.current) {
       groupRef.current.rotation.y += ROTATION_SPEED_Y
+      groupRef.current.rotation.x += ROTATION_SPEED_X
     }
   })
 
@@ -75,7 +77,7 @@ export function ParticleSphere({ images }: ParticleSphereProps) {
       {particles.map((p, i) => (
         <mesh key={i} position={p.position} scale={p.scale}>
           <sphereGeometry args={[1, 8, 6]} />
-          <meshBasicMaterial color={p.color} transparent opacity={1} />
+          <meshBasicMaterial color={p.color} transparent opacity={PARTICLE_OPACITY} />
         </mesh>
       ))}
       {orbitingImages.map((img, i) => (
