@@ -325,7 +325,7 @@ interface ServiceItemProps {
   description: string
   variants: {
     hidden: { opacity: number; y?: number }
-    visible: { opacity: number; y?: number; transition: { duration: number; ease: string } }
+    visible: { opacity: number; y?: number; transition: { duration: number; ease: import("framer-motion").Easing } }
   }
   delay: number
   direction: "left" | "right"
