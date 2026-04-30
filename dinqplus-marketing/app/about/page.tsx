@@ -124,7 +124,7 @@ export default function AboutPage() {
       <section
         id="about-section"
         ref={sectionRef}
-        className="w-full py-24 px-4 bg-gradient-to-b from-[#F2F2EB] to-[#F8F8F2] text-[#202e44] overflow-hidden relative"
+        className="w-full py-24 px-6 md:px-12 bg-gradient-to-b from-[#F2F2EB] to-[#F8F8F2] text-[#202e44] overflow-hidden relative"
       >
         <motion.div
           className="absolute top-20 left-10 w-64 h-64 rounded-full bg-[#88734C]/5 blur-3xl"
